@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* ── Fonts ─────────────────────────────── */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    --font-heading: 'Poppins', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    /* ── Cyan Palette (Primary) ────────────── */
+    --color-primary-50:  #ecfeff;
+    --color-primary-100: #cffafe;
+    --color-primary-200: #a5f3fc;
+    --color-primary-300: #67e8f9;
+    --color-primary-400: #22d3ee;
+    --color-primary-500: #06b6d4;
+    --color-primary-600: #0891b2;
+    --color-primary-700: #0e7490;
+    --color-primary-800: #155e75;
+    --color-primary-900: #164e63;
+    --color-primary-950: #083344;
+
+    /* ── Accent (Slate for text) ───────────── */
+    --color-slate-50:  #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #334155;
+    --color-slate-800: #1e293b;
+    --color-slate-900: #0f172a;
+}
+
+/* ── Google Fonts Import ────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* ── Base Styles ────────────────────────── */
+@layer base {
+    body {
+        font-family: var(--font-sans);
+        color: var(--color-slate-700);
+        background-color: #ffffff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+        color: var(--color-slate-800);
+    }
+}
+
+/* ── Custom Utilities ───────────────────── */
+@layer utilities {
+    .gradient-cyan {
+        background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
+    }
+
+    .gradient-cyan-soft {
+        background: linear-gradient(135deg, var(--color-primary-50), var(--color-primary-100));
+    }
+
+    .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(6, 182, 212, 0.1);
+        box-shadow: 0 4px 24px rgba(6, 182, 212, 0.06);
+    }
+
+    .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(6, 182, 212, 0.12);
+    }
+
+    .text-gradient-cyan {
+        background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-700));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(6, 182, 212, 0.25);
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
+        box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+        transform: translateY(-1px);
+    }
+
+    .btn-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        border: 2px solid var(--color-primary-500);
+        color: var(--color-primary-600);
+        font-weight: 600;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+        background: var(--color-primary-500);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .section-padding {
+        padding: 5rem 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .section-padding {
+            padding: 6rem 2rem;
+        }
+    }
+}
+
+/* ── Scrollbar ──────────────────────────── */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-slate-100);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary-300);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-400);
+}
+
+/* ── Livewire loading states ────────────── */
+[wire\:loading] {
+    opacity: 0.6;
+    pointer-events: none;
+}
