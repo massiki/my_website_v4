@@ -23,6 +23,7 @@ class ManageHomeContent extends Component
     public string $heroCta2Url = '';
     public string $aboutBio = '';
     public $heroImage;
+    public $logoImage;
 
     public function mount(): void
     {
@@ -43,6 +44,7 @@ class ManageHomeContent extends Component
             'heroTitle'   => 'required|string|max:255',
             'heroBio'     => 'required|string',
             'heroImage'   => 'nullable|image|max:2048',
+            'logoImage'   => 'nullable|image|max:2048',
         ]);
 
         HomeContent::setValue('hero_name',      $this->heroName);
@@ -62,6 +64,14 @@ class ManageHomeContent extends Component
             );
         }
 
+        if ($this->logoImage) {
+            $path = $this->logoImage->store('home', 'public');
+            HomeContent::updateOrCreate(
+                ['key' => 'logo_image'],
+                ['image' => $path]
+            );
+        }
+
         session()->flash('success', 'Home content updated successfully!');
     }
 
@@ -69,6 +79,7 @@ class ManageHomeContent extends Component
     {
         return view('livewire.admin.manage-home-content', [
             'currentImage' => HomeContent::getImage('hero_image'),
+            'currentLogo' => HomeContent::getImage('logo_image'),
         ]);
     }
 }
