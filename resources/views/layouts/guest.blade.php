@@ -29,7 +29,7 @@
       <div class="flex items-center justify-between h-16">
         {{-- Logo --}}
         <a href="{{ route('home') }}" wire:navigate class="flex items-center gap-2">
-          <div class="w-9 h-9 gradient-cyan rounded-xl flex items-center justify-center">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center">
             @if ($logoImage)
               <img src="{{ asset('storage/' . $logoImage) }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover">
             @else

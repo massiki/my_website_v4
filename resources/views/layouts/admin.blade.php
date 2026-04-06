@@ -27,7 +27,7 @@
       :class="sidebarOpen ? 'lg:w-64' : 'lg:w-20'" x-transition>
       {{-- Logo --}}
       <div class="h-16 flex items-center gap-3 px-6 border-b border-slate-100">
-        <div class="w-9 h-9 gradient-cyan rounded-xl flex-shrink-0 flex items-center justify-center">
+        <div class="w-9 h-9 rounded-xl flex-shrink-0 flex items-center justify-center">
           @if ($logoImage)
             <img src="{{ asset('storage/' . $logoImage) }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover">
           @else
