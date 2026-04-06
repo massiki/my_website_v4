@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $title ?? 'Dashboard' }} — Admin</title>
 
+  @php
+    $logoImage = \App\Models\HomeContent::getImage('logo_image');
+  @endphp
+  <link rel="shortcut icon" href="{{ asset('storage/' . $logoImage) }}">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -23,12 +28,17 @@
       {{-- Logo --}}
       <div class="h-16 flex items-center gap-3 px-6 border-b border-slate-100">
         <div class="w-9 h-9 gradient-cyan rounded-xl flex-shrink-0 flex items-center justify-center">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-          </svg>
+          @if ($logoImage)
+            <img src="{{ asset('storage/' . $logoImage) }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover">
+          @else
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          @endif
         </div>
         <span x-show="sidebarOpen" class="font-heading font-bold text-slate-800 text-lg">Admin</span>
+
       </div>
 
       {{-- Nav Links --}}
