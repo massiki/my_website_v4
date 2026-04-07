@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
             ['key' => 'hero_title',    'value' => 'Fullstack Developer'],
             ['key' => 'hero_bio',      'value' => 'Passionate developer crafting beautiful web experiences with modern technologies. I turn ideas into elegant, functional digital solutions.'],
             ['key' => 'hero_cta_1',    'value' => 'View Projects'],
-            ['key' => 'hero_cta_1_url','value' => '/projects'],
+            ['key' => 'hero_cta_1_url', 'value' => '/projects'],
             ['key' => 'hero_cta_2',    'value' => 'Contact Me'],
-            ['key' => 'hero_cta_2_url','value' => '/contact'],
+            ['key' => 'hero_cta_2_url', 'value' => '/contact'],
             ['key' => 'about_bio',     'value' => 'I am a fullstack developer with 5+ years of experience building web applications. I specialize in Laravel, Vue.js, and modern web technologies. I am passionate about clean code, user experience, and creating software that makes a difference.'],
         ];
         foreach ($homeData as $item) {
@@ -85,8 +85,23 @@ class DatabaseSeeder extends Seeder
         }
 
         // ── Technologies ────────────────────────────────
-        $techs = ['Laravel', 'PHP', 'Vue.js', 'React', 'TailwindCSS', 'MySQL', 'PostgreSQL',
-                   'Node.js', 'TypeScript', 'Python', 'Docker', 'Redis', 'Flutter', 'Git'];
+        $techs = [
+            'Laravel',
+            'PHP',
+            'Vue.js',
+            'React',
+            'TailwindCSS',
+            'MySQL',
+            'PostgreSQL',
+            'Node.js',
+            'TypeScript',
+            'Python',
+            'Docker',
+            'Redis',
+            'Flutter',
+            'Git',
+            'Bootstrap'
+        ];
         $techModels = [];
         foreach ($techs as $t) {
             $techModels[$t] = Technology::create(['name' => $t, 'slug' => Str::slug($t)]);
@@ -169,7 +184,7 @@ class DatabaseSeeder extends Seeder
                 'is_featured'       => $p['is_featured'],
                 'sort_order'        => $i + 1,
             ]);
-            $techIds = collect($p['techs'])->map(fn ($t) => $techModels[$t]->id)->toArray();
+            $techIds = collect($p['techs'])->map(fn($t) => $techModels[$t]->id)->toArray();
             $project->technologies()->attach($techIds);
         }
 
@@ -178,7 +193,7 @@ class DatabaseSeeder extends Seeder
             [
                 'company'    => 'Tech Corp Inc.',
                 'position'   => 'Senior Fullstack Developer',
-                'description'=> 'Led development of enterprise web applications, mentored junior developers, and implemented CI/CD pipelines.',
+                'description' => 'Led development of enterprise web applications, mentored junior developers, and implemented CI/CD pipelines.',
                 'start_date' => '2022-01-01',
                 'end_date'   => null,
                 'sort_order'  => 1,
@@ -186,7 +201,7 @@ class DatabaseSeeder extends Seeder
             [
                 'company'    => 'Digital Agency',
                 'position'   => 'Web Developer',
-                'description'=> 'Built client websites and web applications using Laravel and Vue.js. Managed project timelines and client communications.',
+                'description' => 'Built client websites and web applications using Laravel and Vue.js. Managed project timelines and client communications.',
                 'start_date' => '2020-03-01',
                 'end_date'   => '2021-12-31',
                 'sort_order'  => 2,
@@ -194,7 +209,7 @@ class DatabaseSeeder extends Seeder
             [
                 'company'    => 'Startup Studio',
                 'position'   => 'Junior Developer',
-                'description'=> 'Developed features for SaaS products, wrote unit tests, and participated in code reviews.',
+                'description' => 'Developed features for SaaS products, wrote unit tests, and participated in code reviews.',
                 'start_date' => '2019-01-01',
                 'end_date'   => '2020-02-28',
                 'sort_order'  => 3,
