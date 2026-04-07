@@ -92,7 +92,7 @@
         @foreach ($adminLinks as $link)
           <a href="{{ route($link['route']) }}" wire:navigate
             class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
-                              {{ request()->routeIs($link['route']) ? 'bg-primary-50 text-primary-600 shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800' }}">
+              {{ request()->routeIs($link['route']) ? 'bg-primary-50 text-primary-600 shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800' }}">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="{{ $link['icon'] }}" />
             </svg>

@@ -56,7 +56,7 @@
           @foreach ($links as $link)
             <a href="{{ route($link['route']) }}" wire:navigate
               class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
-                                  {{ request()->routeIs($link['route']) ? 'bg-primary-50 text-primary-600' : 'text-slate-600 hover:text-primary-600 hover:bg-primary-50/50' }}">
+                {{ request()->routeIs($link['route']) ? 'bg-primary-50 text-primary-600' : 'text-slate-600 hover:text-primary-600 hover:bg-primary-50/50' }}">
               {{ $link['label'] }}
             </a>
           @endforeach
