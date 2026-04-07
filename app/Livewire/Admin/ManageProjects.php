@@ -44,7 +44,7 @@ class ManageProjects extends Component
 
     public function create(): void
     {
-        $this->reset(['editingId','title','short_description','description','category_id','selectedTechs','demo_url','github_url','is_featured','sort_order','thumbnail']);
+        $this->reset(['editingId', 'title', 'short_description', 'description', 'category_id', 'selectedTechs', 'demo_url', 'github_url', 'is_featured', 'sort_order', 'thumbnail']);
         $this->showModal = true;
     }
 
@@ -88,7 +88,7 @@ class ManageProjects extends Component
 
         $this->showModal = false;
         session()->flash('success', $this->editingId ? 'Project updated!' : 'Project created!');
-        $this->reset(['editingId','title','short_description','description','category_id','selectedTechs','demo_url','github_url','is_featured','sort_order','thumbnail']);
+        $this->reset(['editingId', 'title', 'short_description', 'description', 'category_id', 'selectedTechs', 'demo_url', 'github_url', 'is_featured', 'sort_order', 'thumbnail']);
     }
 
     public function delete(int $id): void
