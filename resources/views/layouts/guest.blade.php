@@ -31,7 +31,7 @@
         <a href="{{ route('home') }}" wire:navigate class="flex items-center gap-2">
           <div class="w-9 h-9 rounded-xl flex items-center justify-center">
             @if ($logoImage)
-              <img src="{{ asset('storage/' . $logoImage) }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover">
+              <img src="{{ asset('storage/' . $logoImage) }}" alt="Logo" class="w-9 h-9 rounded-xl">
             @else
               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -81,7 +81,7 @@
         @foreach ($links as $link)
           <a href="{{ route($link['route']) }}" wire:navigate
             class="block px-4 py-2 rounded-lg text-sm font-medium
-                              {{ request()->routeIs($link['route']) ? 'bg-primary-50 text-primary-600' : 'text-slate-600 hover:bg-primary-50' }}">
+              {{ request()->routeIs($link['route']) ? 'bg-primary-50 text-primary-600' : 'text-slate-600 hover:bg-primary-50' }}">
             {{ $link['label'] }}
           </a>
         @endforeach
@@ -101,11 +101,18 @@
         {{-- Brand --}}
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-9 h-9 gradient-cyan rounded-xl flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
+            <div class="w-9 h-9 bg-white rounded-3xl flex items-center justify-center">
+              @php
+                $logoImage = \App\Models\HomeContent::getImage('logo_image');
+              @endphp
+              @if ($logoImage)
+                <img src="{{ asset('storage/' . $logoImage) }}" alt="Logo" class="w-9 h-9 rounded-xl">
+              @else
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              @endif
             </div>
             <span class="font-heading font-bold text-lg">Portfolio</span>
           </div>
