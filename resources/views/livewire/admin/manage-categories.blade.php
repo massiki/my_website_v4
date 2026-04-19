@@ -1,6 +1,6 @@
 <div>
   <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-heading font-semibold text-slate-800">Technologies</h2>
+    <h2 class="text-lg font-heading font-semibold text-slate-800">Categories</h2>
     <button wire:click="create" class="btn-primary text-sm">+ Add</button>
   </div>
   <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
@@ -12,41 +12,42 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-100">
-        @forelse($technologies as $technology)
+        @forelse($categories as $category)
           <tr class="hover:bg-slate-50/50">
-            <td class="px-4 py-3 font-medium text-slate-800">{{ $technology->name }}</td>
+            <td class="px-4 py-3 font-medium text-slate-800">{{ $category->name }}</td>
             <td class="px-4 py-3 text-right space-x-2">
-              <button wire:click="edit({{ $technology->id }})" class="text-primary-600 font-medium">Edit</button>
-              <button wire:click="delete({{ $technology->id }})" wire:confirm="Delete?"
+              <button wire:click="edit({{ $category->id }})" class="text-primary-600 font-medium">Edit</button>
+              <button wire:click="delete({{ $category->id }})"
+                wire:confirm="Delete? jika dihapus, maka projects yang terhubung dengan category akan ikut kehapus"
                 class="text-red-500 font-medium">Delete</button>
             </td>
           </tr>
         @empty
           <tr>
-            <td colspan="4" class="px-4 py-8 text-center text-slate-500">No technologies yet.</td>
+            <td colspan="4" class="px-4 py-8 text-center text-slate-500">No categories yet.</td>
           </tr>
         @endforelse
       </tbody>
     </table>
   </div>
-  <div class="px-6 py-3 border-t border-slate-100">{{ $technologies->links() }}</div>
+  <div class="px-6 py-3 border-t border-slate-100">{{ $categories->links() }}</div>
 
-  @if ($showTechnologyModal)
+  @if ($showCategoryModal)
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" wire:click="$set('showTechnologyModal', false)"></div>
+      <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" wire:click="$set('showCategoryModal', false)"></div>
       <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
-        <h3 class="font-heading font-semibold text-lg mb-4">{{ $editTechId ? 'Edit' : 'Add' }} Technology</h3>
+        <h3 class="font-heading font-semibold text-lg mb-4">{{ $editCategoryId ? 'Edit' : 'Add' }} Category</h3>
         <form wire:submit="save" class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-slate-700 mb-1">Name</label>
-            <input wire:model="technologyName" type="text"
+            <input wire:model="categoryName" type="text"
               class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-primary-400 outline-none text-sm">
-            @error('technologyName')
+            @error('categoryName')
               <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
           </div>
           <div class="flex justify-end gap-3 pt-2">
-            <button type="button" wire:click="$set('showTechnologyModal', false)"
+            <button type="button" wire:click="$set('showCategoryModal', false)"
               class="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
             <button type="submit" class="btn-primary text-sm">Save</button>
           </div>
