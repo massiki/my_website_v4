@@ -12,6 +12,7 @@ use App\Livewire\Admin\ManageHomeContent;
 use App\Livewire\Admin\ManageServices;
 use App\Livewire\Admin\ManageProjects;
 use App\Livewire\Admin\ManageAbout;
+use App\Livewire\Admin\ManageCategories;
 use App\Livewire\Admin\ManageContactInfo;
 use App\Livewire\Admin\ManageMessages;
 use App\Livewire\Admin\ManageTechnologies;
@@ -42,6 +43,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/services',      ManageServices::class)->name('admin.services');
     Route::get('/projects',      ManageProjects::class)->name('admin.projects');
     Route::get('/technologies',  ManageTechnologies::class)->name('admin.technologies');
+    Route::get('/categories',    ManageCategories::class)->name('admin.categories');
     Route::get('/about',         ManageAbout::class)->name('admin.about');
     Route::get('/contact-info',  ManageContactInfo::class)->name('admin.contact');
     Route::get('/messages',      ManageMessages::class)->name('admin.messages');
