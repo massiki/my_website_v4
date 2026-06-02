@@ -1,59 +1,158 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# My Website v4
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website portfolio / company profile berbasis **Laravel + Livewire** dengan **panel admin** untuk mengelola konten (home, services, projects, about, contact info) serta membaca pesan dari halaman contact.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Frontend (publik)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Home**: hero section (nama, title, bio, CTA, gambar) + highlight services + featured projects + daftar technologies.
+- **Services**: daftar layanan (diurutkan).
+- **Projects**: listing project dengan **search** + filter **category** + pagination.
+- **Project detail**: berdasarkan `slug`.
+- **About**: bio + experiences + educations + skills (group by kategori).
+- **Contact**: form kirim pesan (tersimpan ke database) + tampilkan informasi kontak (email, WA, social, resume).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Admin (butuh login)
 
-## Learning Laravel
+Semua route admin berada di prefix `/admin` dan dilindungi middleware `auth` + `admin`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Dashboard**
+- **Manage Home Content**
+- **Manage Services**
+- **Manage Projects** (kategori + many-to-many technologies, upload thumbnail, featured toggle)
+- **Manage Technologies**
+- **Manage Categories**
+- **Manage About** (data yang dipakai halaman About)
+- **Manage Contact Info** (key-value kontak & social link)
+- **Manage Messages** (pesan dari halaman Contact)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Alur sistem (high level)
 
-## Laravel Sponsors
+### 1) Pengunjung membuka halaman
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Route publik ada di `routes/web.php` dan diarahkan ke komponen Livewire:
 
-### Premium Partners
+- `/` → `App\Livewire\Frontend\HomePage`
+- `/services` → `...ServicesPage`
+- `/projects` → `...ProjectsPage`
+- `/projects/{slug}` → `...ProjectDetailPage`
+- `/about` → `...AboutPage`
+- `/contact` → `...ContactPage`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Komponen-komponen ini mengambil data dari model Eloquent (mis. `Service`, `Project`, `Technology`, `Category`, `HomeContent`, dll) dan merender Blade di `resources/views/livewire/...`.
 
-## Contributing
+### 2) Pengunjung mengirim pesan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Di halaman Contact, saat submit akan:
 
-## Code of Conduct
+- validasi input
+- menyimpan record ke tabel `messages` lewat model `App\Models\Message`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3) Admin login
 
-## Security Vulnerabilities
+Login admin menggunakan Livewire `App\Livewire\Auth\Login` di route `/login`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Catatan penting: proses login memverifikasi **akun harus `is_admin = true`**.
 
-## License
+### 4) Admin mengelola konten
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Semua halaman admin berupa komponen Livewire yang melakukan CRUD ke tabel terkait.
+
+Contoh alur kelola project:
+
+- admin membuat/ubah project → otomatis membuat `slug` dari judul
+- upload gambar → disimpan ke disk `public`
+- relasi technologies → disimpan lewat tabel pivot (many-to-many)
+
+## Struktur data (ringkas)
+
+- **KV content**: `home_contents` (`key`, `value`, `image`) untuk hero & about bio + asset (hero/logo).
+- **Projects**: `projects` + relasi `category_id` dan pivot `project_technology`.
+- **Contact info**: `contact_infos` (`key`, `value`) untuk email/WA/social/resume.
+- **Messages**: `messages` untuk pesan dari contact form.
+- **About data**: `experiences`, `educations`, `skills`.
+- **Admin flag**: kolom `users.is_admin`.
+
+## Teknologi yang digunakan
+
+- **Backend**: PHP ^8.2, Laravel ^12
+- **UI / interaktif**: Livewire ^4.2 (komponen untuk frontend & admin)
+- **Frontend tooling**: Vite, `laravel-vite-plugin`
+- **Styling**: Tailwind CSS (via `@tailwindcss/vite`)
+- **HTTP client (JS)**: Axios
+- **Queue / Session / Cache**: memakai driver **database** (lihat `.env.example`)
+- **File upload**: Laravel filesystem disk `public` (thumbnail project, hero/logo image)
+
+## Menjalankan project (lokal)
+
+### Prasyarat
+
+- PHP 8.2+
+- Composer
+- Node.js + npm
+- Database:
+  - default contoh `.env.example` menggunakan **SQLite**, atau
+  - bisa ganti ke MySQL/MariaDB (umum di Laragon)
+
+### Setup cepat
+
+Jalankan perintah berikut dari root project:
+
+```bash
+composer run setup
+```
+
+Script ini akan:
+
+- install dependency PHP
+- membuat `.env` dari `.env.example` (jika belum ada)
+- generate `APP_KEY`
+- migrate database
+- install dependency Node
+- build asset Vite
+
+### Mode development (server + queue + logs + Vite)
+
+```bash
+composer run dev
+```
+
+Ini menjalankan beberapa proses sekaligus:
+
+- `php artisan serve`
+- `php artisan queue:listen ...`
+- `php artisan pail ...`
+- `npm run dev`
+
+### Storage untuk file upload
+
+Jika gambar tidak muncul di frontend/admin setelah upload, pastikan symbolic link storage sudah dibuat:
+
+```bash
+php artisan storage:link
+```
+
+## Kelebihan
+
+- **Full SPA-like experience** dengan Livewire tanpa harus bikin API terpisah.
+- **Admin panel ringan** untuk kelola konten (struktur cukup rapi: frontend vs admin).
+- **Konten fleksibel** via model key-value (`HomeContent`, `ContactInfo`) sehingga perubahan teks/link tidak perlu edit kode.
+- **Fitur portfolio lengkap**: project listing + filtering + featured, services, about (experience/education/skills), contact message.
+
+## Kekurangan / catatan teknis
+
+- **KV table** (`home_contents`, `contact_infos`) mudah dipakai tapi bisa sulit di-maintain jika key makin banyak (raw string key).
+- **Login admin dibatasi `is_admin`**; perlu proses provisioning user admin (set `is_admin` di DB/seed) agar bisa masuk.
+- **Queue/session/cache memakai database**: praktis untuk lokal, tapi untuk trafik tinggi biasanya lebih baik pakai Redis.
+- **Slug project** dibuat dari judul; jika judul sama, berpotensi bentrok karena `slug` unique (perlu strategi disambiguasi jika sering terjadi).
+
+## Referensi lokasi kode penting
+
+- **Routing**: `routes/web.php`
+- **Frontend Livewire**: `app/Livewire/Frontend/`
+- **Admin Livewire**: `app/Livewire/Admin/`
+- **Auth (login)**: `app/Livewire/Auth/Login.php`
+- **Layouts**: `resources/views/layouts/`
+- **Migrations**: `database/migrations/`
+
