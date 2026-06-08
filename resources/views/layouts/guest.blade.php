@@ -9,9 +9,10 @@
 
   @php
     $logoImage = \App\Models\HomeContent::getImage('logo_image');
-    $name = \App\Models\HomeContent::where('key', 'hero_name')->first()->value;
+    $heroNameRecord = \App\Models\HomeContent::where('key', 'hero_name')->first();
+    $name = $heroNameRecord?->value ?? 'Portfolio';
   @endphp
-  <link rel="shortcut icon" href="{{ asset('storage/' . $logoImage) }}">
+  <link rel="shortcut icon" href="{{ $logoImage ? asset('storage/' . $logoImage) : asset('favicon.ico') }}">
 
   {{-- Google Fonts --}}
   <link rel="preconnect" href="https://fonts.googleapis.com">
