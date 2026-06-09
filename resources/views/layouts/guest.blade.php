@@ -119,7 +119,7 @@
                 </svg>
               @endif
             </div>
-            <span class="font-heading font-bold text-lg">Portfolio</span>
+            <span class="font-heading font-bold text-lg">Fikri Amrullah</span>
           </div>
           <p class="text-slate-400 text-sm leading-relaxed">
             Crafting beautiful digital experiences with modern technologies and clean code.
