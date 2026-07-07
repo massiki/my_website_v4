@@ -50,6 +50,7 @@
                 ['route' => 'home', 'label' => 'Home'],
                 ['route' => 'services', 'label' => 'Services'],
                 ['route' => 'projects', 'label' => 'Projects'],
+                ['route' => 'blog', 'label' => 'Blog'],
                 ['route' => 'about', 'label' => 'About'],
                 ['route' => 'contact', 'label' => 'Contact'],
             ];
@@ -61,10 +62,6 @@
               {{ $link['label'] }}
             </a>
           @endforeach
-          <a href="https://blog.heyfikriamrullah.com/" target="_blank"
-            class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-            Blog
-          </a>
         </div>
 
         {{-- Mobile Toggle --}}

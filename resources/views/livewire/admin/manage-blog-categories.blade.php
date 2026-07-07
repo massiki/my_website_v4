@@ -1,0 +1,78 @@
+<div>
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-heading font-semibold text-slate-800">Blog Categories</h2>
+    <button wire:click="create" class="btn-primary text-sm">
+      + Add Blog Category
+    </button>
+  </div>
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-slate-50 border-b border-slate-100">
+        <tr>
+          <th class="px-4 py-3 text-left font-medium text-slate-600">Name</th>
+          <th class="px-4 py-3 text-left font-medium text-slate-600">Slug</th>
+          <th class="px-4 py-3 text-right font-medium text-slate-600">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        @forelse($categories as $category)
+          <tr class="hover:bg-slate-50/50">
+            <td class="px-4 py-3 font-medium text-slate-800">{{ $category->name }}</td>
+            <td class="px-4 py-3 text-slate-500">{{ $category->slug }}</td>
+            <td class="px-4 py-3 text-right space-x-2">
+              <button wire:click="edit({{ $category->id }})" class="text-primary-600 font-medium">
+                Edit
+              </button>
+              <button wire:click="delete({{ $category->id }})"
+                wire:confirm="Hapus kategori blog ini? Jika dihapus, semua blog dengan kategori ini tetap ada, tapi tanpa kategori."
+                class="text-red-500 font-medium">
+                Delete
+              </button>
+            </td>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="3" class="px-4 py-8 text-center text-slate-500">
+              Belum ada kategori blog.
+            </td>
+          </tr>
+        @endforelse
+      </tbody>
+    </table>
+  </div>
+  <div class="px-6 py-3 border-t border-slate-100">
+    {{ $categories->links() }}
+  </div>
+
+  @if ($showCategoryModal)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" wire:click="$set('showCategoryModal', false)"></div>
+      <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <h3 class="font-heading font-semibold text-lg mb-4">
+          {{ $editCategoryId ? 'Edit Blog Category' : 'Add Blog Category' }}
+        </h3>
+        <form wire:submit="save" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">
+              Name
+            </label>
+            <input wire:model="categoryName" type="text" placeholder="Enter category name"
+              class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-primary-400 outline-none text-sm">
+            @error('categoryName')
+              <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+          </div>
+          <div class="flex justify-end gap-3 pt-2">
+            <button type="button" wire:click="$set('showCategoryModal', false)"
+              class="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-xl">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary text-sm">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  @endif
+</div>

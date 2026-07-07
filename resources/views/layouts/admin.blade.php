@@ -14,7 +14,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+  <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   @livewireStyles
 </head>
 
@@ -69,7 +73,6 @@
                   'icon' =>
                       'M16.72 8.47l-7.44 3.2a.75.75 0 000 1.36l7.44 3.2a.75.75 0 001.02-.68V9.15a.75.75 0 00-1.02-.68zm-10.39 2.83a.75.75 0 01.47-.93l10-4.29a.75.75 0 01.93.47.75.75 0 01-.47.93l-10 4.29a.75.75 0 01-.93-.47zm0 2.84l10 4.29a.75.75 0 00.93-.47.75.75 0 00-.47-.93l-10-4.29a.75.75 0 00-.93.47.75.75 0 00.47.93z',
               ],
-
               [
                   'route' => 'admin.projects',
                   'label' => 'Projects',
@@ -78,7 +81,18 @@
               ],
               [
                   'route' => 'admin.categories',
-                  'label' => 'Categories',
+                  'label' => 'Projects Categories',
+                  'icon' =>
+                      'M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 16h4v-4h-4v4zm6 0h4v-4h-4v4z',
+              ],
+              [
+                  'route' => 'admin.blogs',
+                  'label' => 'Blog',
+                  'icon' => 'M7 7h10M7 11h10M7 15h6M5 5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5z',
+              ],
+              [
+                  'route' => 'admin.blog-categories',
+                  'label' => 'Blog Categories',
                   'icon' =>
                       'M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 16h4v-4h-4v4zm6 0h4v-4h-4v4z',
               ],
